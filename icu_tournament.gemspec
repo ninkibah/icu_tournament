@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("dbf", "~> 2.0")        # for SwissPerfect trn/sco files
   s.add_runtime_dependency("rubyzip", "~> 1.1")    # for zipped-up SwissPerfect files
   s.add_runtime_dependency("icu_name", "~> 1.2")   # for name canonicalisation
-  s.add_runtime_dependency("icu_utils", "~> 1.2")  # for federations
+  s.add_runtime_dependency("icu_utils", "~> 1.3.1")# for federations
 
   s.add_development_dependency("bundler", "~> 1.8")
   s.add_development_dependency("rake", "~> 10.4")

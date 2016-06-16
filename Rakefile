@@ -10,7 +10,7 @@ task :default => :spec
 desc "Build a new gem for version #{version}"
 task :build do
   system "gem build icu_tournament.gemspec"
-  system "mv {,pkg/}icu_tournament-#{version}.gem"
+  system "mv icu_tournament-#{version}.gem pkg"
 end
 
 desc "Release version #{version} of the gem to rubygems.org"
