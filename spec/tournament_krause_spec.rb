@@ -807,6 +807,12 @@ KRAUSE
           expect { @p.parse_file!(file) }.not_to raise_error
         end
 
+        it "should handle Cork Major 2018 (Swiss Master format)" do
+          file = "#{@s}/cork_major_2018_swissmaster.tab"
+          @t = @p.parse_file(file, :fed => :ignore)
+          check_results(1, 6, 3.5)
+        end
+
         it "should handle a file with a BOM" do
           file = "#{@s}/armstrong_2012_with_bom.tab"
           expect { @p.parse_file!(file) }.not_to raise_error

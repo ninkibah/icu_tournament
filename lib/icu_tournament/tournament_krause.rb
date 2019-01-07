@@ -433,11 +433,18 @@ module ICU
           full_byes << round
           return 0.0
         end
-        data = "#{data} -" if data.match(/^\d+ (w|b|-)$/)
-        raise "invalid result '#{data}'" unless data.match(/^(0{1,4}|[1-9]\d{0,3}) (w|b|-) (1|0|=|\+|-)$/)
-        opponent = $1.to_i
-        colour   = $2
-        score    = $3
+        data = "#{data} -" if data.match(/^(\d+)? (w|b|-)$/)
+        if data.match(/^(0{1,4}|[1-9]\d{0,3}) (w|b|-) (1|0|=|\+|-)$/)
+          opponent = $1.to_i
+          colour   = $2
+          score    = $3
+        elsif data.match(/- (1|0|=|\+|-)$/)
+          opponent = 0
+          colour = "-"
+          score = $1
+        else
+          raise "invalid result '#{data}'"
+        end
         options  = Hash.new
         options[:opponent] = opponent unless opponent == 0
         options[:colour]   = colour   unless colour == '-'
