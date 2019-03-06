@@ -119,7 +119,6 @@ module ICU
     # Canonicalise and set the first name(s).
     def first_name=(first_name)
       name = Name.new(first_name, 'Last')
-      raise "invalid first name" unless name.first.length > 0
       @first_name = name.first
     end
 
