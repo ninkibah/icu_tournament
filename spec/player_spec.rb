@@ -31,13 +31,11 @@ module ICU
       end
 
       it "should not contain invalid characters" do
-        expect { Player.new('12', 'Orr', 1) }.to raise_error(/invalid first name/)
         expect { Player.new('Mark', '*!', 1) }.to raise_error(/invalid last name/)
       end
 
-      it "should not have empty last name or first name" do
+      it "should not have empty last name" do
         expect { Player.new('Mark', '', 1) }.to raise_error(/invalid last name/)
-        expect { Player.new('', 'Orr', 1) }.to raise_error(/invalid first name/)
       end
 
       it "both names can be returned together" do
