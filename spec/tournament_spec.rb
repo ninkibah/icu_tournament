@@ -210,6 +210,53 @@ EOS
       end
     end
 
+    context "guess round date" do
+      before(:each) do
+        @ennis = Tournament.new('Ennis Shield Round 1', '2019-09-24', :rounds => 1)
+        @u12 = Tournament.new('Leinster U12', '2019-01-05', :finish => '2019-01-05', :rounds => 4)
+        @armstrong = Tournament.new('Armstrong Cup Rounds 1-2', '2019-09-28', :finish => '2019-10-14', :rounds => 2)
+        @irish = Tournament.new('Irish Championship', '2019-08-03', :finish => '2019-08-11', :rounds => 9)
+        @malahide = Tournament.new('Malahide Millenium', '2019-05-04', :finish => '2019-05-06', :rounds => 6)
+        @gonzaga = Tournament.new('Gonzaga Classic', '2019-01-25', :finish => '2019-01-27', :rounds => 5)
+        @sona = Tournament.new('Sona Super Cup U14', '2018-10-20', :finish => '2018-11-25', :rounds => 7)
+      end
+
+      it "should get one round date when only one round" do
+        guess = @ennis.guess_round_dates
+        expect(guess.join('|')).to eq('2019-09-24')
+      end
+
+      it "should get all rounds on right day when only one day" do
+        guess = @u12.guess_round_dates
+        expect(guess.join('|')).to eq('2019-01-05|2019-01-05|2019-01-05|2019-01-05')
+      end
+
+      it "two rounds" do
+        guess = @armstrong.guess_round_dates
+        expect(guess.join('|')).to eq('2019-09-28|2019-10-14')
+      end
+
+      it "9 rounds in 9 days" do
+        guess = @irish.guess_round_dates
+        expect(guess.join('|')).to eq('2019-08-03|2019-08-04|2019-08-05|2019-08-06|2019-08-07|2019-08-08|2019-08-09|2019-08-10|2019-08-11')
+      end
+
+      it "6 rounds in 3 days" do
+        guess = @malahide.guess_round_dates
+        expect(guess.join('|')).to eq('2019-05-04|2019-05-04|2019-05-05|2019-05-05|2019-05-06|2019-05-06')
+      end
+
+      it "5 rounds in 3 days" do
+        guess = @gonzaga.guess_round_dates
+        expect(guess.join('|')).to eq('2019-01-25|2019-01-26|2019-01-26|2019-01-27|2019-01-27')
+      end
+
+      it "7 rounds in 2 weekends" do
+        guess = @sona.guess_round_dates
+        expect(guess.join('|')).to eq('2018-10-20|2018-10-20|2018-10-21|2018-10-21|2018-11-24|2018-11-24|2018-11-25')
+      end
+    end
+
     context "site" do
       it "defaults to nil" do
         expect(Tournament.new('Edinburgh Masters', '2009-11-09').site).to be_nil
