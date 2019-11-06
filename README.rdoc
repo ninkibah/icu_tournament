@@ -4,7 +4,7 @@ For reading or writing files of chess tournament data. Original project name on 
 
 == Install
 
-For Ruby 1.9.2, 1.9.3, 2.0.0 (version 1.1.2 was the last compatible with Ruby 1.8.7).
+For Ruby 1.9.2, 1.9.3, 2.0.0, 2.2.1 (version 1.1.2 was the last compatible with Ruby 1.8.7).
 
   gem install icu_tournament
 
@@ -74,3 +74,7 @@ On error, the _parse_ method returns _nil_ and an error message can be retrieved
 == Author
 
 Mark Orr, rating officer for the Irish Chess Union (ICU[http://icu.ie]).
+
+== Current Maintainer
+
+David Murray, rating officer for the Irish Chess Union. Contact ratings@icu.ie.

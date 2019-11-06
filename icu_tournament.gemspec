@@ -6,10 +6,10 @@ require 'icu_tournament/version'
 Gem::Specification.new do |s|
   s.name = %q{icu_tournament}
 
-  s.authors = ["Mark Orr"]
-  s.email = %q{mark.j.l.orr@googlemail.com}
+  s.authors = ["Mark Orr", "David Murray"]
+  s.email = %q{davidmurray11@gmail.com}
   s.description = %q{Convert files of chess tournament data in different formats to ruby classes and vice-versa.}
-  s.homepage = %q{http://github.com/sanichi/icu_tournament}
+  s.homepage = %q{http://github.com/dbtmurray/icu_tournament}
   s.summary = %q{For reading and writing files of chess tournament data.}
   s.version = ICU::Tournament::VERSION
   s.rubyforge_project = "icu_tournament"
