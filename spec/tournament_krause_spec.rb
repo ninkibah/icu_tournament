@@ -299,6 +299,10 @@ REORDERED
 
       context "serialisation of a manually built tournament" do
         before(:all) do
+          @dates = <<DATES
+132                                                                                        08-06-07  08-06-08  08-06-09
+DATES
+          @dates.strip!
           @krause = <<KRAUSE
 012 Las Vegas National Open
 042 2008-06-07
@@ -321,6 +325,15 @@ KRAUSE
         it "should serialise" do
           expect(@output).to eq(@krause)
         end
+
+        it "should add round dates" do
+          @t.rounds = 3
+          @t.finish = ::Date.parse('2008-06-09')
+          output = @p.serialize(@t)
+          expect(output).not_to eq(@krause)
+          expect(output).to match(@dates)
+        end
+
       end
 
       context "customised serialisation with ICU IDs" do

@@ -336,7 +336,7 @@ module ICU
             if old_player.id
               old_player.merge(opponent)
               old_result = @player.find_result(@round)
-              raise "missing result for player (#{@player.name}) in round #{@round}" unless old_result
+              raise "result for player (#{@player.name}) in round #{@round} does not match previous result for opponent (#{old_player.name})" unless old_result
               raise "mismatched results for player (#{old_player.name}): #{result.inspect} #{old_result.inspect}" unless result.eql?(old_result)
             else
               old_result = old_player.find_result(@round)

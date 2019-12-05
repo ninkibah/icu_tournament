@@ -326,9 +326,13 @@ module ICU
           krause << "\n"
         end
         rounds = t.last_round
-        if t.round_dates.size == rounds && rounds > 0
+        round_dates = t.round_dates
+        if round_dates.empty?
+          round_dates = t.guess_round_dates.map { |d| d.to_s }
+        end
+        if round_dates.size == rounds && rounds > 0
           krause << "132 #{' ' * 85}"
-          t.round_dates.each{ |d| krause << d.sub(/^../, '  ') }
+          round_dates.each{ |d| krause << d.sub(/^../, '  ') }
           krause << "\n"
         end
         t.players.each{ |p| krause << p.to_krause(rounds, arg) }

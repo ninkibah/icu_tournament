@@ -379,6 +379,44 @@ module ICU
       self
     end
 
+    # Make an educated guess at round dates.
+    # If only one round, it is on the start date
+    # If start and end date match, all rounds are on that day
+    # If there are exactly two rounds, round 1 on the start day, round 2 on the finish day
+    # If there are between n and 2n rounds in n consecutive days, then
+    #    start with one round a day, switch to two rounds a day when that's needed
+    # If there are 7 rounds Saturday - Sunday > 1 week: two on the first 3 weekend dates, one on the final Sunday
+    # This covers most Irish tournaments. Returns an empty array if it could not guess
+    def guess_round_dates
+      return [@start] if rounds == 1
+      return [] if @finish.nil?
+
+      round_dates = []
+      start_date = ::Date.parse(@start)
+      finish_date = ::Date.parse(@finish)
+      ndays = (finish_date - start_date).to_i + 1
+      if ndays == 1
+        rounds.times { round_dates << start }
+      elsif rounds == 2
+        round_dates << start
+        round_dates << finish
+      elsif ndays <= rounds and rounds <= ndays * 2
+        double_rounds = rounds - ndays
+        (0...ndays).each do |r|
+          round_dates << start_date + r
+          if r >= (ndays - double_rounds)
+            round_dates << start_date + r
+          end
+        end
+      elsif rounds == 7 and start_date.wday == 6 and finish_date.wday == 0 and ndays > 7
+        2.times { round_dates << start_date }
+        2.times { round_dates << start_date + 1 }
+        2.times { round_dates << finish_date - 1 }
+        round_dates << finish_date
+      end
+      return round_dates
+    end
+
     # Is a tournament invalid? Either returns false (if it's valid) or an error message.
     # Has the same _rerank_ option as validate!.
     def invalid(options={})
